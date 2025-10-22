@@ -1,6 +1,7 @@
 //配置系统文件
 #include "C8051F020.h"
 #include "absacc.h"
+#include "delay.h"
 #include "data_define.c"
 #include "Init_Device.c"
 
