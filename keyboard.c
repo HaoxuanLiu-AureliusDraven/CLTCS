@@ -48,10 +48,10 @@ void key_process(unsigned char *row_value,unsigned char *column_value,int *tens_
     unsigned char digit;
     int j,k;
 
-    if(press_prestate[row_value][column_value])//该键之前没被按，则疑似按下
+    if(press_prestate[*row_value][*column_value])//该键之前没被按，则疑似按下
     {
         delay(10);
-        if(!read_from_keyboard(&row_value,&column_value))//等待一小段时间后再次检测，若按键被松开，说明是抖动引起，不处理
+        if(!read_from_keyboard(row_value,column_value))//等待一小段时间后再次检测，若按键被松开，说明是抖动引起，不处理
             return;
     }
     else//该键一直被按着，不重复处理
@@ -61,7 +61,7 @@ void key_process(unsigned char *row_value,unsigned char *column_value,int *tens_
     {
         for(k=0;k<4;k++)
         {
-            if(j==row_value-1&&k==column_value-1)//被按下的键单独处理
+            if(j==*row_value-1&&k==*column_value-1)//被按下的键单独处理
             {
                 press_curstate[j][k]=0;//记录被按下的状态
                 if(!digit)//输入十位
