@@ -1,3 +1,5 @@
+//该函数用于从键盘中读取预期设定温度并在数码管中显示
+
 #include "C8051F020.h"
 #include "absacc.h"
 #include "delay.h"
