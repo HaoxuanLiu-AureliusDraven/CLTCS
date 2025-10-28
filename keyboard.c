@@ -100,6 +100,6 @@ void main(void)
 	while(1)
 	{
  		if(read_from_keyboard(&row_value,&column_value)) 
- 		key_process(&row_value,&column_value,&tens_digit,&ones_digit);
+ 			key_process(&row_value,&column_value,&tens_digit,&ones_digit);
 	}
 }
