@@ -15,9 +15,11 @@ unsigned char place_table[4][4]={{0,1,2,3},{4,5,6,7},{8,9,0x0A,0x0B},{0x0C,0x0D,
 unsigned char press_prestate[4][4]={{1,1,1,1},{1,1,1,1},{1,1,1,1},{1,1,1,1}};
 unsigned char press_curstate[4][4]={{1,1,1,1},{1,1,1,1},{1,1,1,1},{1,1,1,1}};
 int temperature;
+
+
 void display(unsigned char x,unsigned char y,unsigned char *dp)//指定数码管显示坐标对应字符
 {
-    int num=place_table[x][y];//从位置-数字对应数组中取出应该显示的数字
+    int num=place_table[x-1][y-1];//从位置-数字对应数组中取出应该显示的数字
  	*dp=table[num];//指定显示数字的数码管并显示num
 }     
    
@@ -51,39 +53,53 @@ void key_process(unsigned char *row_value,unsigned char *column_value,int *tens_
     static unsigned char digit;
     int j,k;
 
-    if(press_prestate[*row_value][*column_value])//该键之前没被按，则疑似按下
+    if(press_prestate[*row_value-1][*column_value-1])//该键之前没被按，则疑似按下
     {
-        delay(10);
+        delay(20);
         if(!read_from_keyboard(row_value,column_value))//等待一小段时间后再次检测，若按键被松开，说明是抖动引起，不处理
             return;
-    }
+		
+	    for(j=0;j<4;j++)
+	    {
+	        for(k=0;k<4;k++)
+	        {
+	            if(j==*row_value-1&&k==*column_value-1)//被按下的键单独处理
+	            {
+	                press_curstate[j][k]=0;//记录被按下的状态
+	                if(!digit)//输入十位
+	                {
+						DP3 = DP4 = 0xff;
+	                    *tens_digit=place_table[j][k];
+	                    display(j+1,k+1,&DP3);
+	                    digit++;//让digit不为0，使下次不再输入十位而输入个位
+	                }
+	                else//输入个位
+	                {
+	                    *ones_digit=place_table[j][k];
+	                    display(j+1,k+1,&DP4);
+	                    temperature=10*(*tens_digit)+(*ones_digit);
+	                    digit=0;//清空digit,下一次输入就是十位;	
+	                }
+	            }
+	            else
+	                press_curstate[j][k]=1;
+	            press_prestate[j][k]=press_curstate[j][k];//更新按键状态
+	        }
+	    } 
+	}
     else//该键一直被按着，不重复处理
-        return;
+        return;   
+}
 
-    for(j=0;j<4;j++)
-    {
-        for(k=0;k<4;k++)
-        {
-            if(j==*row_value-1&&k==*column_value-1)//被按下的键单独处理
-            {
-                press_curstate[j][k]=0;//记录被按下的状态
-                if(!digit)//输入十位
-                {
-                    *tens_digit=place_table[j][k];
-                    display(j+1,k+1,&DP3);
-                    digit++;//让digit不为0，使下次不再输入十位而输入个位
-                }
-                else//输入个位
-                {
-                    *ones_digit=place_table[j][k];
-                    display(j+1,k+1,&DP4);
-                    temperature=10*(*tens_digit)+(*ones_digit);
-                    digit=0;//清空digit,下一次输入就是十位
-                }
-            }
-            else
-                press_curstate[j][k]=1;
-            press_prestate[j][k]=press_curstate[j][k];//更新按键状态
-        }
-    }    
+void main(void)
+{
+	unsigned char row_value, column_value;
+	int tens_digit, ones_digit;
+	Init_Device();
+	DP1=DP2=DP3=DP4=0xff;
+	while(1)
+	{
+ 		if(read_from_keyboard(&row_value,&column_value)) 
+ 		key_process(&row_value,&column_value,&tens_digit,&ones_digit);
+	}
 }
