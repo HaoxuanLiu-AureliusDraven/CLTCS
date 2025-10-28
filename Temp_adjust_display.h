@@ -1,5 +1,5 @@
-#ifndef TEMP_ADJUST_DISPLAY_H
-#define TEMP_ADJUST_DISPLAY_H
+#ifndef __TEMP_ADJUST_DISPLAY_H__
+#define __TEMP_ADJUST_DISPLAY_H__
 
 #define    CS1  XBYTE[0x20AA]
 #define    LED1      XBYTE[0x0000]

@@ -1,5 +1,5 @@
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#ifndef __KEYBOARD_H__
+#define __KEYBOARD_H__
 
 #define   DP1   XBYTE[0x0000]
 #define   DP2   XBYTE[0x0001]

@@ -1,5 +1,5 @@
-#ifndef INPUT_CONTROL_H
-#define INPUT_CONTROL_H
+#ifndef __INPUT_CONTROL_H__
+#define __INPUT_CONTROL_H__
 
 #define DAC XBYTE[0x4000] //为DAC分配地址
 #define DAC_MAX 0xFF //设定DAC最大和最小输出，防止数据溢出

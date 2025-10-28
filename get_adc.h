@@ -1,5 +1,5 @@
-#ifndef GET_ADC_H
-#define GET_ADC_H
+#ifndef __GET_ADC_H__
+#define __GET_ADC_H__
 
 #define    CS1       XBYTE[0x20AA]
 #define    LED1      XBYTE[0x0000]
