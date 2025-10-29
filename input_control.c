@@ -7,7 +7,7 @@
 #include "Init_Device.c"
 #include "math.h"
 
-#include "get_adc.c" //获取当前adc采样值的头文件，还没写！！！！！
+#include "get_adc.c" 
 #include "keyboard.c" //获取预设定温度
 
 #define DAC XBYTE[0x4000] //为DAC分配地址
@@ -16,13 +16,13 @@
 
 //选择PID算法：因为PID算法具有响应速度快、稳态误差小和抑制超调的特点
 
-//确定PID参数，需要调试参数确定，此处仅为预设
+//确定PID参数
 
 #define Kp 1.2 //比例系数
 #define Ki 0.05 //积分系数
 #define Kd 0.3 //微分系数
 
-//预设PID算法所需要的上一次误差数据和多次误差累积的积分项
+//PID算法所需要的上一次误差数据和多次误差累积的积分项
 
 static int last_error = 0 //记录上一次误差数据
 static float intergral = 0.0 //记录积分项累积
@@ -41,9 +41,9 @@ void main(void){
     while(1){
 
         //获取当前adc采样值
-        adc_current = get_adc(); //这个函数还没写，假设有
+        adc_current = get_adc(); 
         //获取设定温度的数字量
-        goal_temp = ####; //keyboard.c函数需要多出来一个接口，把设定值的数字量传到这里！！！！
+        goal_temp = temperature; 
         //计算误差
         error = abs((int)(goal_temp)-(int)(adc_current));
         
