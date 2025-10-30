@@ -59,9 +59,9 @@ void key_process(unsigned char *row_value,unsigned char *column_value,int *tens_
         if(!read_from_keyboard(row_value,column_value))//等待一小段时间后再次检测，若按键被松开，说明是抖动引起，不处理
             return;
 
-		if(place_table[row-1][column-1]==0x0A)//A为开始键
+		if(place_table[*row_value-1][*column_value-1]==0x0A)//A为开始键
 			*process_flag=1;
-		if(place_table[row-1][column-1]==0x0B)//B为停止键
+		if(place_table[*row_value-1][*column_value-1]==0x0B)//B为停止键
 			*process_flag=0;
 		
 	    for(j=0;j<4;j++)

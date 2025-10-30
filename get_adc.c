@@ -6,8 +6,6 @@
 unsigned char num[]={0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x90,0x7f};
 #define    LED1      XBYTE[0x0000]
 #define    LED2      XBYTE[0x0001]
-#define    LED3      XBYTE[0x0002]
-#define    LED4      XBYTE[0x0003]
 //#define filter_core 3  滤波的内容先不考虑
 //static unsigned char last_filtered = 0;
 
@@ -75,7 +73,7 @@ void display(unsigned char x)
 	x = (x*100)/255;  // 转换为0-100的百分比
 	i = x%10;         // 个位
 	x = (x-i)/10;     // 十位
-	LED3 = num[x];    // 显示十位
-	LED4 = num[i];    // 显示个位
+	LED1 = num[x];    // 显示十位
+	LED2 = num[i];    // 显示个位
 	delay(30);
 }

@@ -5,7 +5,6 @@
 #include "delay.h"
 #include "data_define.c"
 #include "Init_Device.c"
-#include "math.h"
 
 #include "get_adc.h" //获取当前adc采样值的头文件
 #include "keyboard.h" //获取预设定温度
@@ -25,7 +24,7 @@
 //PID算法所需要的上一次误差数据和多次误差累积的积分项
 
 static int last_error = 0 //记录上一次误差数据
-static float intergral = 0.0 //记录积分项累积
+static float integral = 0.0 //记录积分项累积
 
 void main(void){//测试后改名input_control
     
@@ -45,7 +44,7 @@ void main(void){//测试后改名input_control
         //获取设定温度的数字量
         goal_temp = set_temperature; //keyboard.c函数需要多出来一个接口，把设定值的数字量传到这里！！！！
         //计算误差
-        error = abs((int)(goal_temp)-(int)(adc_current));
+        error = (int)(goal_temp)-(int)(adc_current);
         
         //计算PID三项参数和总参数
 
