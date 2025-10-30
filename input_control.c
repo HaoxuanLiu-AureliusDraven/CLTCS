@@ -29,12 +29,12 @@ static float intergral = 0.0 //记录积分项累积
 
 void main(void){//测试后改名input_control
     
-    unsigned char x; //输入到DAC的数字量
-    unsigned char goal_temp; //预设定的温度
-    unsigned char adc_current; //当前ADC的采样值
-    unsigned int error; //当前时刻ADC的采样值与设定值的数字量误差
-    float P_value, I_value, D_value; //定义误差与系数相乘后的PID三项数值
-    float PID_value; //定义PID三项之和
+    unsigned char x=0; //输入到DAC的数字量
+    unsigned char goal_temp=0; //预设定的温度
+    unsigned char adc_current=0; //当前ADC的采样值
+    unsigned int error=0; //当前时刻ADC的采样值与设定值的数字量误差
+    float P_value=0, I_value=0, D_value=0; //定义误差与系数相乘后的PID三项数值
+    float PID_value=0; //定义PID三项之和
 
     Init_Device();  //初始化系统
 

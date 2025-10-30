@@ -25,9 +25,9 @@ void display(unsigned char x,unsigned char y,unsigned char *dp)//指定数码管
    
 int read_from_keyboard(unsigned char *row_value,unsigned char *column_value)//读键盘，看是否有键被按下
 { 
-	unsigned char row_state,check_num,counter,decoder_output;
-    int addr;
-	int i;
+	unsigned char row_state=0,check_num=0,counter=0,decoder_output=0;
+    int addr=0;
+	int i=0;
 
     addr=0x0004;//设置单片机待访问地址
     for(i=1;i<5;i++,addr++)//对每行轮询
@@ -50,8 +50,8 @@ int read_from_keyboard(unsigned char *row_value,unsigned char *column_value)//�
   	
 void key_process(unsigned char *row_value,unsigned char *column_value,int *tens_digit,int *ones_digit,unsigned char *process_flag)//某键被按下后，先进行防抖动处理，再更新按键状态并显示数字
 {
-    static unsigned char digit;
-    int j,k;
+    static unsigned char digit=0;
+    int j=0,k=0;
 
     if(press_prestate[*row_value-1][*column_value-1])//该键之前没被按，则疑似按下
     {
@@ -99,8 +99,8 @@ void key_process(unsigned char *row_value,unsigned char *column_value,int *tens_
 
 void main(void)
 {
-	unsigned char row_value, column_value,process_flag;
-	int tens_digit, ones_digit;
+	unsigned char row_value=0,column_value=0,process_flag=0;
+	int tens_digit=0, ones_digit=0;
 	Init_Device();
 	DP1=DP2=DP3=DP4=0xff;
 	while(1)

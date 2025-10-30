@@ -13,8 +13,8 @@ void delay(uint x);
 
 void main(void)
 { 
-  unsigned char x;
-  int i;
+  unsigned char x=0;
+  int i=0;
   Init_Device();
   LED1=LED2=LED3=LED4=0xff;
 	while(1)
@@ -38,6 +38,6 @@ void main(void)
 
 void delay(uint x)
 { 
-  unsigned long i;
+  unsigned long i=0;
 	for(i=0;i<1000*x;++i) i=i; 
 }

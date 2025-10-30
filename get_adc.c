@@ -19,7 +19,7 @@ void display(unsigned char x);
 
 void main(void)//测试后改名get_adc
 { 
-  unsigned char x;
+  unsigned char x=0;
   Init_Device();
  
   //last_filtered = read_adc();
@@ -33,7 +33,7 @@ void main(void)//测试后改名get_adc
 
 unsigned char read_adc(void)
 {
-	unsigned char adc_value;
+	unsigned char adc_value=0;
 	CS1 = 0;         // 启动ADC转换
 	delay(10);       // 等待转换完成
 	adc_value = CS1; // 读取转换结果
@@ -51,14 +51,14 @@ unsigned char read_adc(void)
 
 void delay(uint x)
 { 
-  unsigned long i;
+  unsigned long i=0;
 	for(i=0;i<1000*x;++i) i=i; 
 }
 
 unsigned char ave_adc(void)
 {
 	int count = 10;
-	int i;
+	int i=0;
 	int sum = 0;
 
 	for(i = 0; i < count; i++)
@@ -71,7 +71,7 @@ unsigned char ave_adc(void)
 
 void display(unsigned char x)
 {
-	int i;
+	int i=0;
 	x = (x*100)/255;  // 转换为0-100的百分比
 	i = x%10;         // 个位
 	x = (x-i)/10;     // 十位
