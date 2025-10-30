@@ -7,8 +7,8 @@
 #include "Init_Device.c"
 #include "math.h"
 
-#include "get_adc.c" //获取当前adc采样值的头文件，还没写！！！！！
-#include "keyboard.c" //获取预设定温度
+#include "get_adc.h" //获取当前adc采样值的头文件
+#include "keyboard.h" //获取预设定温度
 
 #define DAC XBYTE[0x4000] //为DAC分配地址
 #define DAC_MAX 0xFF //设定DAC最大和最小输出，防止数据溢出
@@ -27,7 +27,7 @@
 static int last_error = 0 //记录上一次误差数据
 static float intergral = 0.0 //记录积分项累积
 
-void main(void){
+void main(void){//测试后改名input_control
     
     unsigned char x; //输入到DAC的数字量
     unsigned char goal_temp; //预设定的温度
@@ -41,9 +41,9 @@ void main(void){
     while(1){
 
         //获取当前adc采样值
-        adc_current = get_adc(); //这个函数还没写，假设有
+        adc_current = get_adc(); //这个函数还没写
         //获取设定温度的数字量
-        goal_temp = ####; //keyboard.c函数需要多出来一个接口，把设定值的数字量传到这里！！！！
+        goal_temp = set_temperature; //keyboard.c函数需要多出来一个接口，把设定值的数字量传到这里！！！！
         //计算误差
         error = abs((int)(goal_temp)-(int)(adc_current));
         

@@ -2,25 +2,48 @@
 #include "C8051F020.h"
 #include "absacc.h"
 #include "delay.h"
+#include "get_adc.h"
+#include "input_control.h"
+#include "keyboard.h"
+#include "Temp_adjust_display.h"
 #include "data_define.c"
 #include "Init_Device.c"
 
-//给四个数码管配置地址
-#define    LED1      XBYTE[0x0000]
-#define    LED2      XBYTE[0x0001]
-#define    LED3      XBYTE[0x0002]
-#define    LED4      XBYTE[0x0003]
+enum state
+{
+    SYS_INIT,
+    SYS_INPUT,
+    SYS_RUNNING
+}SystemState;
 
-int main(void){
+int main(void)
+{
+    unsigned char row,column,process_flag;
+    int tens_digit,ones_digit;
+    SystemState=SYS_INIT;
+    while(1)
+    {
+        switch(SystemState)
+        {
+            case SYS_INIT:
+                Init_Device(); //单片机初始化配置
+                LED1=LED2=LED3=LED4=0xff;//初始状态让四个数码管全灭  
+                set_temperature=0;//温度清零
+                get_adc();
+                SystemState=SYS_INPUT;//进入核心功能 
+            case SYS_INPUT:
+                if(read_from_keyboard(&row,&column))
+                    key_process(&row,&column,&tens_digit,&ones_digit,&process_flag);
+                    if(process_flag)//按下确认键
+                        SystemState=SYS_RUNNING;
+            case SYS_RUNNING:
+                if(read_from_keyboard(&row,&column))
+                    key_process(&row,&column,&tens_digit,&ones_digit,&process_flag);
+                    if(!process_flag)//按下停止键则等待再次输入
+                        SystemState=SYS_INPUT;
 
-    Init_Device(); //单片机初始化配置
-    LED1=LED2=LED3=LED4=0xff;//初始状态让四个数码管全灭
-
-    while(1){
-
-        forward_path();
-        delay(10);
-        feedback();
-        delay(10);
+                input_control();
+            break;
+        }
     }
 }

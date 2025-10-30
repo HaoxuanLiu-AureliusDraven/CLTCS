@@ -11,6 +11,9 @@ extern unsigned char table[];
 extern unsigned char place_table[4][4];
 extern unsigned char press_prestate[4][4];
 extern unsigned char press_curstate[4][4];
-extern int temperature;//在main.c定义更好
+extern int set_temperature;//在main.c定义更好
+
+int read_from_keyboard(unsigned char *row_value,unsigned char *column_value);
+void key_process(unsigned char *row_value,unsigned char *column_value,int *tens_digit,int *ones_digit,unsigned char *process_flag);
 
 #endif

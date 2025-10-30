@@ -8,7 +8,7 @@ unsigned char num[]={0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x90,0x7f};
 #define    LED2      XBYTE[0x0001]
 #define    LED3      XBYTE[0x0002]
 #define    LED4      XBYTE[0x0003]
-//#define filter_coe 3  滤波的内容先不考虑
+//#define filter_core 3  滤波的内容先不考虑
 //static unsigned char last_filtered = 0;
 
 void delay(uint x);
@@ -17,7 +17,7 @@ unsigned char ave_adc(void);
 unsigned char filter(void);
 void display(unsigned char x);
 
-void main(void)
+void main(void)//测试后改名get_adc
 { 
   unsigned char x;
   Init_Device();
